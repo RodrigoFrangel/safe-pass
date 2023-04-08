@@ -1,10 +1,10 @@
 import inquirer from 'inquirer';
+import { showPassword } from './showPassword.js';
 import { generatePassword } from './generatePassword.js';
 
 // Function to prompt the user for password parameters using inquirer
 export function promptUser() {
-  inquirer
-    .prompt([
+  inquirer.prompt([
       {
         name: 'mode',
         type: 'list',
@@ -71,11 +71,11 @@ export function promptUser() {
             length = 16;
             break;
           default:
-            console.log('Invalid option');
+            console.log('Opção inválida');
             return;
         }
         let password = generatePassword(length, true, true, true, true);
-        console.log(`Sua senha é: ${password}`);
+        showPassword(password);
       } else if (answer.mode === 'Personalizado') {
         if (!answer.lower && !answer.upper && !answer.numbers && !answer.symbols) {
           console.log('Você deve incluir pelo menos um tipo de caractere em sua senha.\n');
@@ -96,7 +96,7 @@ export function promptUser() {
                 promptUser();
               } else if (innerAnswer.option === 'Sair') {
                 console.clear();
-                console.log('Até mais! 🙂 ' + chalk.dim('Arrombado!'));
+                console.log('Até mais! 🙂');
               }
             });
         } else {
@@ -107,7 +107,7 @@ export function promptUser() {
             answer.numbers,
             answer.symbols
           );
-          console.log(`Sua senha é: ${password}`);
+          showPassword(password);
         }
       } else if (answer.mode === 'Sair') {
         console.clear();
