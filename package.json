@@ -1,0 +1,22 @@
+{
+  "name": "safe-pass",
+  "version": "1.0.0",
+  "description": "safe pass is a simple and intuitive password generator",
+  "main": "src/index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "start": "node .",
+    "test": "jest --config jest.config.js"
+  },
+  "keywords": [],
+  "author": "RodrigoFrangel",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "inquirer": "^9.1.5"
+  }
+}
