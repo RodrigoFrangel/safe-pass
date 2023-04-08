@@ -12,6 +12,7 @@
     "start": "node .",
     "test": "jest --config jest.config.js"
   },
+  "bin": "src/index.js",
   "keywords": [],
   "author": "RodrigoFrangel",
   "license": "ISC",
