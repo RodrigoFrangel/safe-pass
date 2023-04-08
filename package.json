@@ -1,6 +1,6 @@
 {
   "name": "safe-pass",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "safe pass is a simple and intuitive password generator",
   "main": "src/index.js",
   "type": "module",
@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "^5.2.0",
-    "inquirer": "^9.1.5"
+    "inquirer": "^9.1.5",
+    "nanospinner": "^1.1.0"
   }
 }
