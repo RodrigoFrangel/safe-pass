@@ -3,6 +3,7 @@ import { byeBye } from './byeBye.js';
 import { generatePassword } from './generatePassword.js';
 import { passwordLength } from './passwordLength.js';
 import { retryPrompt } from './retryPrompt.js';
+import { savePassword} from './savePassword.js';
 import { showPassword } from './showPassword.js';
 
 // Solicitar os parâmetros da senha ao usuário usando inquirer
@@ -92,6 +93,7 @@ export function promptUser() {
       const password = generatePassword(length, lower, upper, numbers, symbols);
 
       showPassword(password);
+      savePassword(password);
     })
     .catch((error) => {
       console.error('Erro:', error.message);
