@@ -1,19 +1,19 @@
 {
-  "name": "safe-pass",
-  "version": "1.0.1",
-  "description": "safe pass is a simple and intuitive password generator",
+  "name": "safe-pass-cli",
+  "version": "1.0.3",
+  "description": "SafePass is a simple and intuitive Node-based password generator.",
   "main": "src/index.js",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/RodrigoFrangel/safe-pass.git"
   },
   "scripts": {
     "start": "node .",
     "test": "jest --config jest.config.js"
   },
   "bin": "src/index.js",
-  "keywords": [],
+  "keywords": ["password","safe","node","generator","simple","intuitive","customizable"],
   "author": "RodrigoFrangel",
   "license": "ISC",
   "dependencies": {

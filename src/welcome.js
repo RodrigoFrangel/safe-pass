@@ -1,5 +1,7 @@
 import chalk from 'chalk';
 
+// Exibe uma mensagem de boas-vindas estilizada e fornece instruções sobre como usar o gerador de senha.
+// Displays a stylized welcome message and provides instructions on how to use the password generator.
 export async function welcome() {
   console.log('Bem-vindo(a) ao ' + chalk.bold(chalk.red('Safe') + ('Pass')) + '!');
 

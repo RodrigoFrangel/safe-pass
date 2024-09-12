@@ -1,10 +1,16 @@
 import inquirer from 'inquirer';
-import { showPassword } from './showPassword.js';
+import { byeBye } from './byeBye.js';
 import { generatePassword } from './generatePassword.js';
+import { passwordLength } from './passwordLength.js';
+import { retryPrompt } from './retryPrompt.js';
+import { savePassword} from './savePassword.js';
+import { showPassword } from './showPassword.js';
 
-// Function to prompt the user for password parameters using inquirer
+// Solicitar os parâmetros da senha ao usuário usando inquirer
+// Prompt the user for password parameters using inquirer
 export function promptUser() {
-  inquirer.prompt([
+  inquirer
+    .prompt([
       {
         name: 'mode',
         type: 'list',
@@ -29,7 +35,7 @@ export function promptUser() {
         when: (answer) => answer.mode === 'Personalizado',
         validate: (value) => {
           const valid = !isNaN(parseInt(value)) && value > 0;
-          return valid || 'Por favor, insira um número positivo';
+          return valid || 'Por favor, insira um número positivo.';
         },
       },
       {
@@ -37,84 +43,59 @@ export function promptUser() {
         name: 'lower',
         message: 'Incluir letras minúsculas?',
         when: (answer) => answer.mode === 'Personalizado',
+        default: true,
       },
       {
         type: 'confirm',
         name: 'upper',
         message: 'Incluir letras maiúsculas?',
         when: (answer) => answer.mode === 'Personalizado',
+        default: true,
       },
       {
         type: 'confirm',
         name: 'numbers',
         message: 'Incluir números?',
         when: (answer) => answer.mode === 'Personalizado',
+        default: true,
       },
       {
         type: 'confirm',
         name: 'symbols',
         message: 'Incluir símbolos?',
         when: (answer) => answer.mode === 'Personalizado',
+        default: true,
       },
     ])
     .then((answer) => {
+      if (answer.mode === 'Sair') {
+        byeBye();
+        // return;
+      }
+      // Declaração e inicialização de variáveis (algumas com valor padrão true para o modo 'Automático')
+      let length, lower = true, upper = true, numbers = true, symbols = true;
+
       if (answer.mode === 'Automático') {
-        let length;
-        switch (answer.strength) {
-          case 'Fraco (6 caracteres)':
-            length = 6;
-            break;
-          case 'Médio (10 caracteres)':
-            length = 10;
-            break;
-          case 'Forte (16 caracteres)':
-            length = 16;
-            break;
-          default:
-            console.log('Opção inválida');
-            return;
-        }
-        let password = generatePassword(length, true, true, true, true);
-        showPassword(password);
+        length = passwordLength(answer.strength);
       } else if (answer.mode === 'Personalizado') {
+        // Verifica se pelo menos um tipo de caractere foi selecionado
         if (!answer.lower && !answer.upper && !answer.numbers && !answer.symbols) {
           console.log('Você deve incluir pelo menos um tipo de caractere em sua senha.\n');
-          inquirer.prompt([
-            {
-              type: 'list',
-              name: 'option',
-              message: 'O que você gostaria de fazer?',
-              choices: [
-                'Tentar novamente',
-                'Sair',
-              ],
-            },
-          ])
-            .then((innerAnswer) => {
-              if (innerAnswer.option === 'Tentar novamente') {
-                console.clear();
-                promptUser();
-              } else if (innerAnswer.option === 'Sair') {
-                console.clear();
-                console.log('Até mais! 🙂');
-              }
-            });
-        } else {
-          let password = generatePassword(
-            answer.length,
-            answer.lower,
-            answer.upper,
-            answer.numbers,
-            answer.symbols
-          );
-          showPassword(password);
+          retryPrompt();
         }
-      } else if (answer.mode === 'Sair') {
-        console.clear();
-        console.log('Até mais! 🙂');
+        length = answer.length;
+        lower = answer.lower;
+        upper = answer.upper;
+        numbers = answer.numbers;
+        symbols = answer.symbols;
       }
+
+      const password = generatePassword(length, lower, upper, numbers, symbols);
+
+      showPassword(password);
+      savePassword(password);
     })
     .catch((error) => {
-      console.log(error);
+      console.error('Erro:', error.message);
     });
 }

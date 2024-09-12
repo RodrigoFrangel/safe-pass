@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 
-// Function to generate a random password
+// Gera uma senha aleatória com base nos parâmetros especificados pelo usuário.
+// Generates a random password based on user-specified parameters.
 export function generatePassword(length, lower, upper, numbers, symbols) {
   let charset = '';
   if (lower) charset += 'abcdefghijklmnopqrstuvwxyz';
@@ -14,11 +15,7 @@ export function generatePassword(length, lower, upper, numbers, symbols) {
       password += charset[crypto.randomInt(0, charset.length)];
     }
   } catch (error) {
-    if (error.code === 'ERR_OUT_OF_RANGE') {
-      console.log('y');
-    } else {
-      console.log('Error: ' + error.message);
-    }
+      console.error('Erro: ' + error.message);
   }
 
   return password;
